@@ -1,0 +1,12 @@
+.hero-img{
+    background-image: url(/images/hero_image.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 700px;
+}
+.navbar{
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .5);
+}
+.text-shadow {
+    text-shadow: -2px 2px 4px rgba(0, 0, 0, 0.4); 
+  }
