@@ -10,3 +10,30 @@
 .text-shadow {
     text-shadow: -2px 2px 4px rgba(0, 0, 0, 0.4); 
   }
+.text-indent{
+    text-indent: 2rem;
+}
+.linear-background{
+    background-image: linear-gradient(to bottom right,#0d6dfd28, #0d6dfdd3);;
+}
+
+.card-body{
+    background-color: rgb(219, 219, 219);
+}
+.testimonials{
+    background: linear-gradient(to bottom, #007bff 40%, #f8f9fa 40%);
+    height: 600px;
+    margin: 0;
+}
+.user-testimonials {
+    text-align: center;
+  }
+.testimonials-images{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+.test-color{
+    background-color: #3b86f7;
+    color: white;
+}
