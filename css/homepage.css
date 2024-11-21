@@ -21,7 +21,7 @@
     background-color: rgb(219, 219, 219);
 }
 .testimonials{
-    background: linear-gradient(to bottom, #007bff 40%, #f8f9fa 40%);
+    background: linear-gradient(to bottom, #007bff 50%, #f1f1f1 50%);
     height: 600px;
     margin: 0;
 }
@@ -35,5 +35,9 @@
 }
 .test-color{
     background-color: #3b86f7;
+    color: white;
+}
+.create-account{
+    background-image: linear-gradient(to top left,#0d6dfd28, #0d6dfdd3);
     color: white;
 }
