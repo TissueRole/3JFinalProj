@@ -1,5 +1,5 @@
 .hero-img{
-    background-image: url(/images/hero_image.jpg);
+    background-image: url('../images/hero.jpg');
     background-size: cover;
     background-position: center;
     height: 700px;
