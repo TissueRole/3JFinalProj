@@ -1,5 +1,5 @@
 <?php
-    include '../connection.php';
+    include '../../connection.php';
 
     if (isset($_GET['id'])){
         $id =$_GET['id'];
@@ -13,6 +13,7 @@
             $description = $row ['description'];
             $duration = $row ['duration'];
             $price = $row ['price'];
+            $type = $row ['type'];
             $image = $row ['image_path'];
             $update = $row ['updated_at'];
         }
@@ -26,24 +27,25 @@
         $description = $_POST['description'];
         $duration = $_POST['duration'];
         $price = $_POST['price'];
+        $type = $_POST['type'];
         $image = $_POST['image'];
         $id= $_POST['id'];
 
-        if(!empty($name)&& !empty ($description)&& !empty ($duration)&& !empty ($price)&& !empty ($image)){
-            $sql ="UPDATE services SET service_name='$name', description='$description', duration= '$duration', price= '$price', image_path ='$image', updated_at=CURRENT_TIMESTAMP  WHERE service_id='$id'";
+        if(!empty($name)&& !empty($description)&& !empty($duration)&& !empty($price)&& !empty($type)&& !empty($image)){
+            $sql ="UPDATE services SET service_name='$name', description='$description', duration= '$duration', price= '$price', type='$type',image_path ='$image', updated_at=CURRENT_TIMESTAMP  WHERE service_id='$id'";
             
             if($conn->query($sql)=== TRUE){
                 echo "<h1 class='text-center fs-3 mt-5'>Service updated sucessfully!</h1>";
+                header("Location: ../index.php");
             }
             else{
                 echo "Update Failed";
             }
         }
         else{
-            echo "Fill all the fields!";
+            echo "<h1 class='text-center fs-3 mt-5'>Fill all the fields!</h1>";
         }
     }
-    header("Location: ../index.php");
 
 ?>
 <!DOCTYPE html>
@@ -51,7 +53,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Edit</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -70,6 +72,9 @@
 
             <label for="price" class="form-label fw-semibold">Price:</label>
             <input type="number" class="form-control" id="price" name="price" value="<?php echo $price; ?>">
+
+            <label for="type" class="form-label fw-semibold">Type:</label>
+            <input type="text" class="form-control" id="type" name="type" value="<?php echo $type; ?>">
 
             <label for="image" class="form-label fw-semibold">Image Path:</label>
             <input type="text" class="form-control" id="image" name="image" value="<?php echo $image; ?>">

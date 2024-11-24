@@ -1,5 +1,5 @@
 <?php
-    include '../connection.php';
+    include '../../connection.php';
 
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
@@ -9,11 +9,12 @@
         $description = $_POST['description'];
         $duration = $_POST['duration'];
         $price = $_POST['price'];
+        $type = $_POST['type'];
         $image = $_POST['image'];
     }
 
-    if(!empty($name)&& !empty ($description)&& !empty ($duration)&& !empty ($price)&& !empty ($image)){
-        $sql= "INSERT INTO services (service_name, description, duration, price, image_path) VALUES ('$name','$description','$duration','$price','$image')";
+    if(!empty($name)&& !empty($description)&& !empty($duration)&& !empty($price)&& !empty($type)&& !empty($image)){
+        $sql= "INSERT INTO services (service_name, description, duration, price, type, image_path) VALUES ('$name','$description','$duration','$price', '$type','$image')";
 
         if($conn->query($sql)=== TRUE){
             echo "<h3 class='h3 mt-5 text-center'>New service added sucessfully!</h3>";
@@ -32,7 +33,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Add</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -49,6 +50,9 @@
 
             <label for="price" class="form-label fw-semibold">Price:</label>
             <input type="number" class="form-control" id="price" name="price">
+
+            <label for="type" class="form-label fw-semibold">Type:</label>
+            <input type="text" class="form-control" id="type" name="type">
 
             <label for="image" class="form-label fw-semibold">Image Path:</label>
             <input type="text" class="form-control" id="image" name="image">
