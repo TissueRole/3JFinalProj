@@ -1,8 +1,34 @@
 <?php
     include 'connection.php';
 
-    $sql = "SELECT * FROM services"; 
+    $sql = "SELECT * FROM services Where 1";
+
+    $serviceType = isset($_POST['serviceType']) ? $_POST['serviceType'] :'';
+    $serviceRange = isset($_POST['serviceRange']) ? $_POST['serviceRange'] :'';
+    $serviceDuration = isset($_POST['serviceDuration']) ? $_POST['serviceDuration'] :'';
+
+    if($serviceType != ''){
+        $sql .= " AND type = '$serviceType'";
+    }
+
+    if ($serviceRange != '') {
+        list($minPrice, $maxPrice) = explode('-', $serviceRange);
+        if (is_numeric($minPrice) && is_numeric($maxPrice)) {
+            $sql .= " AND price BETWEEN $minPrice AND $maxPrice";
+        }
+    }
+    
+    if ($serviceDuration != '') {
+        list($minDuration, $maxDuration) = explode('-', $serviceDuration);
+        if (is_numeric($minDuration) && is_numeric($maxDuration)) {
+            $sql .= " AND duration BETWEEN $minDuration AND $maxDuration";
+        }
+    }
+
     $result = $conn->query($sql);
+    if ($result === false) {
+    die("Error: " . $conn->error);
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,47 +38,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Therapy Services</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script>
+    function autoSubmitForm() {
+        document.getElementById('filterForm').submit();
+    }
+  </script>
 </head>
 <body>
 <div class="container-fluid mt-5">
     <div class="row">
         <div class="col-md-2 ms-5 me-1 py-5 px-4 border">
             <h5>Filters</h5>
-            <form>
+            <form method="POST" action ="servicepage.php" id="filterForm">
                 <div class="mb-3">
                     <label for="serviceType" class="form-label">Service Type</label>
-                    <select id="serviceType" class="form-select">
+                    <select id="serviceType" class="form-select" name="serviceType" onchange="autoSubmitForm()">
                         <option value="">All</option>
-                        <option value="One-on-One">One-on-One</option>
-                        <option value="Couples">Couples</option>
-                        <option value="Group">Group</option>
-                        <option value="Virtual">Virtual</option>
+                        <option value="One-on-One" <?= $serviceType == 'One-on-One' ? 'selected' : '' ?>>One-on-One</option>
+                        <option value="Couples" <?= $serviceType == 'Couples' ? 'selected' : '' ?>>Couples</option>
+                        <option value="Group" <?= $serviceType == 'Group' ? 'selected' : '' ?>>Group</option>
+                        <option value="Virtual" <?= $serviceType == 'Virtual' ? 'selected' : '' ?>>Virtual</option>
                     </select>
                 </div>
                     <div class="mb-3">
                     <label for="priceRange" class="form-label">Price Range</label>
-                    <select id="priceRange" class="form-select">
+                    <select id="priceRange" class="form-select" name="serviceRange" onchange="autoSubmitForm()">
                         <option value="">All</option>
-                        <option value="60-70">$60–$70</option>
-                        <option value="71-80">$71–$80</option>
-                        <option value="80-90">$81–$90</option>
-                        <option value="100-150">$100-$150/option>
+                        <option value="60-70" <?= $serviceRange == '60-70' ? 'selected' : '' ?>>$60–$70</option>
+                        <option value="71-80" <?= $serviceRange == '71-80' ? 'selected' : '' ?>>$71–$80</option>
+                        <option value="81-99" <?= $serviceRange == '81-99' ? 'selected' : '' ?>>$81–$99</option>
+                        <option value="100-150" <?= $serviceRange == '100-150' ? 'selected' : '' ?>>$100-$150</option>
                     </select>
                     </div>
-
                 <div class="mb-3">
                     <label for="duration" class="form-label">Duration</label>
-                    <select id="duration" class="form-select">
+                    <select id="duration" class="form-select" name="serviceDuration" onchange="autoSubmitForm()">
                         <option value="">All</option>
-                        <option value="30-60">30–60 minutes</option>
-                        <option value="45-90">45–90 minutes</option>
-                        <option value="60-75">60–75 minutes</option>
-                        <option value="60-90">60–90 minutes</option>
+                        <option value="30-45" <?= $serviceDuration == '30-45' ? 'selected' : '' ?>>30-45 minutes</option>
+                        <option value="46-60" <?= $serviceDuration == '46-60' ? 'selected' : '' ?>>46-60 minutes</option>
+                        <option value="61-75" <?= $serviceDuration == '61-75' ? 'selected' : '' ?>>61-75 minutes</option>
+                        <option value="76-90" <?= $serviceDuration == '76-90' ? 'selected' : '' ?>>76-90 minutes</option>
                     </select>
                 </div>
+                <button type="submit" class="btn btn-primary mb-5">Apply Filters</button>
             </form>
             <div class="col-md-1">
-            <div class="mb-3 ms-2">
+            <div class="mb-3 ">
                 <select id="sortOptions" class="form-select w-auto">
                     <option value="">Sort by</option>
                     <option value="popularity">Popularity</option>
@@ -80,7 +111,7 @@
                                 </h6>
                                 <p class="card-text">{$row['description']}</p>
                                 <p class="card-text"><strong>Type: </strong>{$row['type']}</p>
-                                <p class="card-text"><strong>Duration: </strong>{$row['duration']}</p>
+                                <p class="card-text"><strong>Duration: </strong>{$row['duration']} Minutes</p>
                                 <div class="mt-auto">
                                     <a href="booking-individual-therapy.html" class="btn btn-primary w-100">Book Now</a>
                                 </div>
