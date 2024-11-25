@@ -1,3 +1,17 @@
+<?php
+
+include 'connection.php';
+
+$sql = "SELECT * FROM services";
+$result = $conn->query($sql);
+
+$sql2 = "SELECT * FROM users WHERE role = 'therapist'";
+$result2 = $conn->query($sql2);
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,18 +33,30 @@
                         <label for="serviceSelect" class="form-label fs-5">Choose a Service</label>
                         <select id="serviceSelect" class="form-select mb-5">
                             <option value="">Select a service</option>
-                            <option value="Individual Therapy">$50–$120 | Individual Therapy</option>
-                            <option value="Couples Therapy">$80–$150 | Couples Therapy</option>
-                            <option value="Family Therapy">$100–$180 | Family Therapy</option>
+                            <?php
+                                if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    echo '<option value="' . $row['service_id']. '">' . $row['service_name'] . ' | $'. $row['price'] . '</option>';
+                                    }
+                                }else {
+                                    echo "<tr><td colspan='9' class='text-center'>No services found.</td></tr>";
+                                }
+                            ?>
                         </select>
                         </div>
                         <div class="mb-3">
                             <label for="therapistSelect" class="form-label fs-5">Preferred Therapist</label>
                             <select id="therapistSelect" class="form-select mb-5">
-                                <option value="">Select a therapist</option>
-                                <option value="Therapist A">Therapist A</option>
-                                <option value="Therapist B">Therapist B</option>
-                                <option value="Therapist C">Therapist C</option>
+                                <option value="">Select a service</option>
+                                <?php
+                                    if ($result2->num_rows > 0) {
+                                    while ($row = $result2->fetch_assoc()) {
+                                        echo '<option value="' . $row['user_id']. '">' . $row['full_name'] . '</option>';
+                                        }
+                                    }else {
+                                        echo "<tr><td colspan='9' class='text-center'>No services found.</td></tr>";
+                                    }
+                                ?>
                             </select>
                         </div>
                         <div id="serviceSummary" class="alert alert-info d-none">
@@ -61,7 +87,7 @@
                     <div id="step3" class="step d-none">
                         <h5 class="fs-3 mb-5">Step 3: Confirmation and Payment</h5>
                         <div id="appointmentSummary" class="alert alert-secondary">
-                            <strong>Appointment Summary:</strong>
+                            <p class="fs-5"><strong>Appointment Summary</strong></p>
                             <p><strong>Service:</strong> <span id="summaryService"></span></p>
                             <p><strong>Therapist:</strong> <span id="summaryTherapist"></span></p>
                             <p><strong>Date:</strong> <span id="summaryDate"></span></p>

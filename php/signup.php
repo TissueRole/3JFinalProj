@@ -1,3 +1,39 @@
+<?php
+    include 'connection.php';
+
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $phone = $_POST['number'];
+
+
+        if (!empty($name) && !empty($email) && !empty($password) && !empty($phone)) {
+
+            $sql = "INSERT INTO users (full_name, email, password, phone_number, role) VALUES ('$name', '$email', '$password', '$phone', 'customer')";
+
+            if ($conn->query($sql) === TRUE) {
+                echo "<h3 class='h3 mt-5 text-center'>Sign-up successful! Welcome, $name.</h3>";
+                session_start();
+                $_SESSION['user_id'] = $conn->insert_id;
+                $_SESSION['name'] = $name;
+                header("Location: ../user.html");
+                exit();
+            } else {
+                echo "<h3 class='text-center mt-5'>Error: Could not complete registration. " . $conn->error . "</h3>";
+            }
+        } else {
+            echo "<h3 class='text-center mt-5'>Please fill in all fields.</h3>";
+        }
+    }
+
+    $conn->close();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,14 +51,14 @@
                         <h3>Sign Up</h3>
                     </div>
                     <div class="card-body">
-                        <form action="process_signup.php" method="POST" class="mb-3 p-3">
+                        <form action="signup.php" method="POST" class="mb-3 p-3">
                             <div class="mb-3">
                                 <label for="fullName" class="form-label">Full Name</label>
                                 <input 
                                     type="text" 
                                     class="form-control" 
                                     id="fullName" 
-                                    name="full_name" 
+                                    name="name" 
                                     maxlength="100" 
                                     required 
                                     placeholder="Enter your full name">
@@ -45,7 +81,7 @@
                                     type="tel" 
                                     class="form-control" 
                                     id="phoneNumber" 
-                                    name="phone_number" 
+                                    name="number" 
                                     maxlength="15" 
                                     pattern="[0-9]+" 
                                     required 
@@ -79,7 +115,7 @@
                                 <button type="submit" class="btn btn-primary">Sign Up</button>
                             </div>
                         </form>
-                        <a href="login.html">Already have an account?</a>
+                        <a href="php/login.php">Already have an account?</a>
                     </div>
                 </div>
             </div>

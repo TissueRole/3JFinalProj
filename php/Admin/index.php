@@ -15,18 +15,21 @@
 </head>
 <body>
     <ul class="nav bg-primary fixed-top mb-5 p-2 nav-underline ps-5">
-    <li class="nav-item ">
-        <a class="nav-link text-white" aria-current="page" href="#Services">Manage Services</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-white" aria-current="page" href="#">Manage Bookings</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-white" aria-current="page" href="#">Therapist Schedule Management</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-white" aria-current="page" href="#">Payment and Reports</a>
-    </li>
+        <li class="nav-item ">
+            <a class="nav-link text-white" aria-current="page" href="#Services">Manage Services</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" aria-current="page" href="#">Manage Bookings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" aria-current="page" href="#">Therapist Schedule Management</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" aria-current="page" href="#">Payment and Reports</a>
+        </li>
+        <li class="nav-item d-flex justify-content-end ms-auto me-5">
+            <a href="../logout.php" class="btn text-white">Log Out</a>
+        </li>
     </ul>
     <div class="container my-5 p-5" id="Services">
         <h1 class="fs-3 mb-2">Manage Services:</h1>
