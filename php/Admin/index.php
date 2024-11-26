@@ -10,12 +10,15 @@
     $sql3 = "SELECT * FROM availability";
     $result3 = $conn->query($sql3);
 
-    $availabilityData = [];
+    $availabilityDate = [];
+    $availabilityTime = [];
     if ($result3->num_rows > 0) {
         while ($row = $result3->fetch_assoc()) {
-            $availabilityData[$row['therapist_id']][] = "{$row['date']}:{$row['start_time']}: {$row['end_time']}";
-        }
+            $availabilityDate[$row['therapist_id']][] = $row['date'];
+            $availabilityTime[$row['therapist_id']][] = "{$row['start_time']} - {$row['end_time']}";
     }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -93,7 +96,7 @@
         <table class="table table-striped">
             <thead class="table-dark">
                 <tr>
-                <th>#</th>
+                <th>Therapist Id</th>
                 <th>Therapist Name</th>
                 <th>Availabale Date</th>
                 <th>Available Hours</th>
@@ -104,25 +107,26 @@
                 <?php
                 if ($result2->num_rows > 0) {
                     while ($therapist = $result2->fetch_assoc()) {
+
                         $therapistId = $therapist['user_id'];
                         $therapistName = $therapist['full_name'];
 
-                        $availabilityDate = isset($availabilityData[$therapistId])
-                            ? implode('<br>', $availabilityData[$therapistId])
+                        $availabilityDateStr = isset($availabilityDate[$therapistId]) && is_array($availabilityDate[$therapistId])
+                            ? implode('<br>', $availabilityDate[$therapistId])
                             : "No availability Date";
 
-                        $availabilityTime = isset($availabilityData[$therapistId])
-                            ? implode('<br>', $availabilityData[$therapistId])
+                        $availabilityTimeStr = isset($availabilityTime[$therapistId]) && is_array($availabilityTime[$therapistId])
+                            ? implode('<br>', $availabilityTime[$therapistId])
                             : "No availability Time";
 
                         echo "<tr>
                             <td>{$therapistId}</td>
                             <td>{$therapistName}</td>
-                            <td>{$availabilityDate}</td>
-                            <td>{$availabilityTime}</td>
+                            <td>{$availabilityDateStr}</td>
+                            <td>{$availabilityTimeStr}</td>
                             <td>
-                                <button class='btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#editAvailabilityModal' data-id='{$therapistId}' data-name='{$therapistName}'>Edit Hours</button>
-                                <button class='btn btn-success btn-sm' data-bs-toggle='modal' data-bs-target='#addAvailabilityModal' data-id='{$therapistId}' data-name='{$therapistName}'>Add Hours</button>
+                                <a class='btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#editAvailabilityModal' data-id='{$therapistId}' data-name='{$therapistName}'>Edit Hours</a>
+                                <a class='btn btn-success btn-sm' href='manageAvailability/add.php' data-bs-toggle='modal' data-bs-target='#addAvailabilityModal' data-id='{$therapistId}' data-name='{$therapistName}'>Add Hours</a>
                             </td>
                         </tr>";
                     }
@@ -142,14 +146,16 @@
                 </div>
                 <div class="modal-body">
                     <form action="edit_availability.php" method="POST">
-                        <input type="hidden" name="therapist_id" id="editTherapistId">
+                        <input type="hidden" name="therapist_id" id="EditTherapistId">
                         <div class="mb-3">
                             <label for="editDays" class="form-label">Days</label>
-                            <input type="text" class="form-control" id="editDays" name="days" placeholder="e.g., Monday to Friday">
+                            <input type="date" class="form-control" id="editDays" name="date" placeholder="Date">
                         </div>
                         <div class="mb-3">
-                            <label for="editHours" class="form-label">Hours</label>
-                            <input type="text" class="form-control" id="editHours" name="hours" placeholder="e.g., 9 AM - 5 PM">
+                            <label for="editHours" class="form-label">Start Time:</label>
+                            <input type="time" class="form-control" id="editHours" name="start" placeholder="Start Hour">
+                            <label for="editHours" class="form-label">End Time:</label>
+                            <input type="time" class="form-control" id="editHours" name="end" placeholder="End Hour">
                         </div>
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                     </form>
@@ -165,15 +171,17 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <form action="add_availability.php" method="POST">
+                <form action="manageAvailability/add.php" method="POST">
                     <input type="hidden" name="therapist_id" id="addTherapistId">
                     <div class="mb-3">
-                        <label for="addDays" class="form-label">Days</label>
-                        <input type="text" class="form-control" id="addDays" name="days" placeholder="e.g., Monday to Friday">
+                        <label for="addDays" class="form-label">Day</label>
+                        <input type="date" class="form-control" id="addDays" name="day" placeholder="Date">
                     </div>
                     <div class="mb-3">
-                        <label for="addHours" class="form-label">Hours</label>
-                        <input type="text" class="form-control" id="addHours" name="hours" placeholder="e.g., 9 AM - 5 PM">
+                        <label for="addHours" class="form-label">Start Time:</label>
+                        <input type="time" class="form-control" id="addHours" name="start" placeholder="Start Hour">
+                        <label for="addHours" class="form-label">End Time:</label>
+                        <input type="time" class="form-control" id="addHours" name="end" placeholder="End Hour">
                     </div>
                     <button type="submit" class="btn btn-success">Add Availability</button>
                 </form>

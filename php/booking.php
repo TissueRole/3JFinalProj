@@ -8,6 +8,8 @@ $result = $conn->query($sql);
 $sql2 = "SELECT * FROM users WHERE role = 'therapist'";
 $result2 = $conn->query($sql2);
 
+$sql3 = "SELECT * FROM availability";
+$result3 = $conn->query($sql3);
 
 ?>
 
@@ -69,7 +71,7 @@ $result2 = $conn->query($sql2);
                         <h5 class="fs-3 mb-5">Step 2: Choose Date and Time</h5>
                         <div class="mb-3">
                             <label for="datePicker" class="form-label">Select Date</label>
-                            <input type="date" id="datePicker" class="form-control mb-5">
+                            <input type="text" id="datePicker" class="form-control mb-5">
                         </div>
                         <div id="timeSlots" class="mt-3">
                             <label class="form-label">Available Time Slots</label>
