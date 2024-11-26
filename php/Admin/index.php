@@ -3,6 +3,19 @@
 
     $sql = "SELECT * FROM services";
     $result = $conn->query($sql);
+
+    $sql2 = "SELECT * FROM users WHERE role = 'therapist'";
+    $result2 = $conn->query($sql2);
+    
+    $sql3 = "SELECT * FROM availability";
+    $result3 = $conn->query($sql3);
+
+    $availabilityData = [];
+    if ($result3->num_rows > 0) {
+        while ($row = $result3->fetch_assoc()) {
+            $availabilityData[$row['therapist_id']][] = "{$row['date']}:{$row['start_time']}: {$row['end_time']}";
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +35,7 @@
             <a class="nav-link text-white" aria-current="page" href="#">Manage Bookings</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-white" aria-current="page" href="#">Therapist Schedule Management</a>
+            <a class="nav-link text-white" aria-current="page" href="#therapistSched">Therapist Schedule Management</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-white" aria-current="page" href="#">Payment and Reports</a>
@@ -35,7 +48,7 @@
         <h1 class="fs-3 mb-2">Manage Services:</h1>
         <div>
             <table class="table table-striped table-bordered">
-                <thead>
+                <thead class="table-dark">
                     <th scope="col">Id</th>
                     <th scope="col">Name</th>
                     <th scope="col">Description</th>
@@ -75,6 +88,115 @@
             <a class="btn btn-primary" href="manageServices/add.php">Add New</a>
         </div>
     </div>
+    <div class="container my-5 p-5" id="therapistSched">
+        <h1 class="mb-4">Therapist Availability</h1>
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                <th>#</th>
+                <th>Therapist Name</th>
+                <th>Availabale Date</th>
+                <th>Available Hours</th>
+                <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if ($result2->num_rows > 0) {
+                    while ($therapist = $result2->fetch_assoc()) {
+                        $therapistId = $therapist['user_id'];
+                        $therapistName = $therapist['full_name'];
+
+                        $availabilityDate = isset($availabilityData[$therapistId])
+                            ? implode('<br>', $availabilityData[$therapistId])
+                            : "No availability Date";
+
+                        $availabilityTime = isset($availabilityData[$therapistId])
+                            ? implode('<br>', $availabilityData[$therapistId])
+                            : "No availability Time";
+
+                        echo "<tr>
+                            <td>{$therapistId}</td>
+                            <td>{$therapistName}</td>
+                            <td>{$availabilityDate}</td>
+                            <td>{$availabilityTime}</td>
+                            <td>
+                                <button class='btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#editAvailabilityModal' data-id='{$therapistId}' data-name='{$therapistName}'>Edit Hours</button>
+                                <button class='btn btn-success btn-sm' data-bs-toggle='modal' data-bs-target='#addAvailabilityModal' data-id='{$therapistId}' data-name='{$therapistName}'>Add Hours</button>
+                            </td>
+                        </tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='4' class='text-center'>No therapists found.</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal fade" id="editAvailabilityModal" tabindex="-1" aria-labelledby="editAvailabilityModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editAvailabilityModalLabel">Edit Availability</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="edit_availability.php" method="POST">
+                        <input type="hidden" name="therapist_id" id="editTherapistId">
+                        <div class="mb-3">
+                            <label for="editDays" class="form-label">Days</label>
+                            <input type="text" class="form-control" id="editDays" name="days" placeholder="e.g., Monday to Friday">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editHours" class="form-label">Hours</label>
+                            <input type="text" class="form-control" id="editHours" name="hours" placeholder="e.g., 9 AM - 5 PM">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addAvailabilityModal" tabindex="-1" aria-labelledby="addAvailabilityModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAvailabilityModalLabel">Add Availability</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <form action="add_availability.php" method="POST">
+                    <input type="hidden" name="therapist_id" id="addTherapistId">
+                    <div class="mb-3">
+                        <label for="addDays" class="form-label">Days</label>
+                        <input type="text" class="form-control" id="addDays" name="days" placeholder="e.g., Monday to Friday">
+                    </div>
+                    <div class="mb-3">
+                        <label for="addHours" class="form-label">Hours</label>
+                        <input type="text" class="form-control" id="addHours" name="hours" placeholder="e.g., 9 AM - 5 PM">
+                    </div>
+                    <button type="submit" class="btn btn-success">Add Availability</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    var editModal = document.getElementById('editAvailabilityModal');
+    editModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var therapistId = button.getAttribute('data-id');
+        var therapistName = button.getAttribute('data-name');
+        document.getElementById('editTherapistId').value = therapistId;
+    });
+
+    var addModal = document.getElementById('addAvailabilityModal');
+    addModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var therapistId = button.getAttribute('data-id');
+        document.getElementById('addTherapistId').value = therapistId;
+    });
+  </script>
 </body>
 </html>
