@@ -6,6 +6,7 @@
     $serviceType = isset($_POST['serviceType']) ? $_POST['serviceType'] :'';
     $serviceRange = isset($_POST['serviceRange']) ? $_POST['serviceRange'] :'';
     $serviceDuration = isset($_POST['serviceDuration']) ? $_POST['serviceDuration'] :'';
+    $sortOption = isset($_POST['sortOption']) ? $_POST['sortOption'] : '';
 
     if($serviceType != ''){
         $sql .= " AND type = '$serviceType'";
@@ -22,6 +23,14 @@
         list($minDuration, $maxDuration) = explode('-', $serviceDuration);
         if (is_numeric($minDuration) && is_numeric($maxDuration)) {
             $sql .= " AND duration BETWEEN $minDuration AND $maxDuration";
+        }
+    }
+
+    if ($sortOption != '') {
+        if ($sortOption == 'price') {
+            $sql .= " ORDER BY price ASC";
+        } elseif ($sortOption == 'duration') {
+            $sql .= " ORDER BY duration ASC";
         }
     }
 
@@ -80,26 +89,23 @@
                         <option value="76-90" <?= $serviceDuration == '76-90' ? 'selected' : '' ?>>76-90 minutes</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary mb-5">Apply Filters</button>
+                <div class="mb-3">
+                    <label for="sortOptions" class="form-label">Sort by</label>
+                    <select id="sortOptions" class="form-select w-auto" name="sortOption" onchange="autoSubmitForm()">
+                        <option value="">Sort by</option>
+                        <option value="price" <?= $sortOption == 'price' ? 'selected' : '' ?>>Price</option>
+                        <option value="duration" <?= $sortOption == 'duration' ? 'selected' : '' ?>>Duration</option>
+                    </select>
+                </div>
             </form>
-            <div class="col-md-1">
-            <div class="mb-3 ">
-                <select id="sortOptions" class="form-select w-auto">
-                    <option value="">Sort by</option>
-                    <option value="popularity">Popularity</option>
-                    <option value="price">Price</option>
-                    <option value="duration">Duration</option>
-                </select>
-            </div>
-        </div>
         </div>
             <?php
                 if($result->num_rows > 0){
                     $counter = 0;
-                    echo '<div class="col-md-8 p-5">'; // 2nd column
+                    echo '<div class="col-md-8 p-5">';
                     while($row = $result-> fetch_assoc()){
                         if($counter%3 == 0){
-                            echo '<div class="row gap-4 mb-4">'; // row
+                            echo '<div class="row gap-4 mb-4">';
                         }
                         echo <<<HTML
                         <div class="card col d-flex flex-column">
@@ -118,9 +124,7 @@
                             </div>
                         </div>
                         HTML;
-
                         $counter++;
-
                         if($counter%3 == 0){
                             echo '</div>';
                         }
