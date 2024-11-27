@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $check_result = mysqli_query($conn, $check_sql);
 
         if (mysqli_num_rows($check_result) > 0) {
-            echo "This therapist already has availability for the selected date.";
+            echo "<h1>This therapist already has availability for the selected date.</h1>";
         } else {
             $insert_sql = "INSERT INTO availability (therapist_id, date, start_time, end_time) 
                            VALUES ($therapist_id, '$available_date', '$start_time', '$end_time')";

@@ -125,7 +125,7 @@
                             <td>{$availabilityDateStr}</td>
                             <td>{$availabilityTimeStr}</td>
                             <td>
-                                <a class='btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#editAvailabilityModal' data-id='{$therapistId}' data-name='{$therapistName}'>Edit Hours</a>
+                                <a class='btn btn-primary btn-sm' href='manageAvailability/edit.php' data-bs-toggle='modal' data-bs-target='#editAvailabilityModal' data-id='{$therapistId}' data-name='{$therapistName}'>Edit Hours</a>
                                 <a class='btn btn-success btn-sm' href='manageAvailability/add.php' data-bs-toggle='modal' data-bs-target='#addAvailabilityModal' data-id='{$therapistId}' data-name='{$therapistName}'>Add Hours</a>
                             </td>
                         </tr>";
@@ -145,17 +145,17 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="edit_availability.php" method="POST">
-                        <input type="hidden" name="therapist_id" id="EditTherapistId">
+                    <form action="manageAvailability/edit.php" method="POST">
+                        <input type="hidden" name="therapist_id" id="editTherapistId">
                         <div class="mb-3">
                             <label for="editDays" class="form-label">Days</label>
-                            <input type="date" class="form-control" id="editDays" name="date" placeholder="Date">
+                            <input type="date" class="form-control" id="editDays" name="day" placeholder="Date">
                         </div>
                         <div class="mb-3">
-                            <label for="editHours" class="form-label">Start Time:</label>
-                            <input type="time" class="form-control" id="editHours" name="start" placeholder="Start Hour">
-                            <label for="editHours" class="form-label">End Time:</label>
-                            <input type="time" class="form-control" id="editHours" name="end" placeholder="End Hour">
+                            <label for="starHours" class="form-label">Start Time:</label>
+                            <input type="time" class="form-control" id="startHours" name="start" placeholder="Start Hour">
+                            <label for="endHours" class="form-label">End Time:</label>
+                            <input type="time" class="form-control" id="endHours" name="end" placeholder="End Hour">
                         </div>
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                     </form>
@@ -178,10 +178,10 @@
                         <input type="date" class="form-control" id="addDays" name="day" placeholder="Date">
                     </div>
                     <div class="mb-3">
-                        <label for="addHours" class="form-label">Start Time:</label>
-                        <input type="time" class="form-control" id="addHours" name="start" placeholder="Start Hour">
-                        <label for="addHours" class="form-label">End Time:</label>
-                        <input type="time" class="form-control" id="addHours" name="end" placeholder="End Hour">
+                        <label for="startHours" class="form-label">Start Time:</label>
+                        <input type="time" class="form-control" id="startHours" name="start" placeholder="Start Hour">
+                        <label for="endHours" class="form-label">End Time:</label>
+                        <input type="time" class="form-control" id="endHours" name="end" placeholder="End Hour">
                     </div>
                     <button type="submit" class="btn btn-success">Add Availability</button>
                 </form>

@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <h3>Login</h3>
                         </div>
                         <div class="card-body">
-                            <!-- Display error message if any -->
+
                             <?php if ($error): ?>
                                 <div class="alert alert-danger" role="alert">
                                     <?php echo $error; ?>
