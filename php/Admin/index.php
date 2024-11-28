@@ -17,6 +17,8 @@
             $availabilityDate[$row['therapist_id']][] = $row['date'];
             $availabilityTime[$row['therapist_id']][] = "{$row['start_time']} - {$row['end_time']}";
     }
+    $sql4 = "SELECT * FROM appointments";
+    $result4 = $conn->query($sql4);
 }
 
 ?>
@@ -35,7 +37,7 @@
             <a class="nav-link text-white" aria-current="page" href="#Services">Manage Services</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-white" aria-current="page" href="#">Manage Bookings</a>
+            <a class="nav-link text-white" aria-current="page" href="#Bookings">Manage Bookings</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-white" aria-current="page" href="#therapistSched">Therapist Schedule Management</a>
@@ -48,7 +50,7 @@
         </li>
     </ul>
     <div class="container my-5 p-5" id="Services">
-        <h1 class="fs-3 mb-2">Manage Services:</h1>
+        <h1 class="fs-3 mb-2">Manage Services</h1>
         <div>
             <table class="table table-striped table-bordered">
                 <thead class="table-dark">
@@ -91,8 +93,58 @@
             <a class="btn btn-primary" href="manageServices/add.php">Add New</a>
         </div>
     </div>
+    <div class="container my-5 p-5" id="Bookings">
+        <h1 class="fs-3 mb-2">Manage Bookings</h1>
+        <div>
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <th scope="col">Id</th>
+                    <th scope="col">Customer</th>
+                    <th scope="col">Therapist</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Start Time</th>
+                    <th scope="col">End Time</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </thead>
+                <tbody>
+                    <?php
+                        if ($result4->num_rows > 0) {
+                            while ($row = $result4->fetch_assoc()) {
+                                echo "<tr>
+                                        <td>{$row['appointment_id']}</td>
+                                        <td>{$row['user_id']}</td>
+                                        <td>{$row['therapist_id']}</td>
+                                        <td>{$row['appointment_date']}</td>
+                                        <td>{$row['start_time']}</td>
+                                        <td>{$row['end_time']}</td>
+                                        <td>{$row['status']}</td>
+                                        <td>
+                                            <div class='btn-group'>
+                                                <button type='button' class='btn btn-sm btn-warning dropdown-toggle' data-bs-toggle='dropdown' aria-expanded='false'>
+                                                    Change Status
+                                                </button>
+                                                <ul class='dropdown-menu'>
+                                                    <li><a class='dropdown-item' href='manageBookings/changeStatus.php?id={$row['appointment_id']}&status=pending'>Pending</a></li>
+                                                    <li><a class='dropdown-item' href='manageBookings/changeStatus.php?id={$row['appointment_id']}&status=confirmed'>Confirmed</a></li>
+                                                    <li><a class='dropdown-item' href='manageBookings/changeStatus.php?id={$row['appointment_id']}&status=completed'>Completed</a></li>
+                                                    <li><a class='dropdown-item' href='manageBookings/changeStatus.php?id={$row['appointment_id']}&status=cancelled'>Cancelled</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='9' class='text-center'>No services found.</td></tr>";
+                        }
+                    ?>
+                </tbody>
+            </table>
+            <a class="btn btn-primary" href="manageServices/add.php">Add New</a>
+        </div>
+    </div>
     <div class="container my-5 p-5" id="therapistSched">
-        <h1 class="mb-4">Therapist Availability</h1>
+        <h1 class="mb-2 fs-3">Therapist Availability</h1>
         <table class="table table-striped">
             <thead class="table-dark">
                 <tr>
@@ -171,23 +223,23 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <form action="manageAvailability/add.php" method="POST">
-                    <input type="hidden" name="therapist_id" id="addTherapistId">
-                    <div class="mb-3">
-                        <label for="addDays" class="form-label">Day</label>
-                        <input type="date" class="form-control" id="addDays" name="day" placeholder="Date">
-                    </div>
-                    <div class="mb-3">
-                        <label for="startHours" class="form-label">Start Time:</label>
-                        <input type="time" class="form-control" id="startHours" name="start" placeholder="Start Hour">
-                        <label for="endHours" class="form-label">End Time:</label>
-                        <input type="time" class="form-control" id="endHours" name="end" placeholder="End Hour">
-                    </div>
-                    <button type="submit" class="btn btn-success">Add Availability</button>
-                </form>
+                    <form action="manageAvailability/add.php" method="POST">
+                        <input type="hidden" name="therapist_id" id="addTherapistId">
+                        <div class="mb-3">
+                            <label for="addDays" class="form-label">Day</label>
+                            <input type="date" class="form-control" id="addDays" name="day" placeholder="Date">
+                        </div>
+                        <div class="mb-3">
+                            <label for="startHours" class="form-label">Start Time:</label>
+                            <input type="time" class="form-control" id="startHours" name="start" placeholder="Start Hour">
+                            <label for="endHours" class="form-label">End Time:</label>
+                            <input type="time" class="form-control" id="endHours" name="end" placeholder="End Hour">
+                        </div>
+                        <button type="submit" class="btn btn-success">Add Availability</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>

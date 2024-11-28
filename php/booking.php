@@ -49,7 +49,7 @@ $result3 = $conn->query($sql3);
                         <div class="mb-3">
                             <label for="therapistSelect" class="form-label fs-5">Preferred Therapist</label>
                             <select id="therapistSelect" class="form-select mb-5">
-                                <option value="">Select a service</option>
+                                <option value="">Select a Therapist</option>
                                 <?php
                                     if ($result2->num_rows > 0) {
                                     while ($row = $result2->fetch_assoc()) {
