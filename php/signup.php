@@ -43,8 +43,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
+    <nav class="navbar navbar-expand-lg bg-primary fixed-top">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link fw-semibold text-white mx-5" aria-current="page" href="../index.php">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-semibold text-white mx-5" aria-current="page" href="servicepage.php">Services</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container vh-100 pt-5">
+        <div class="row justify-content-center mt-5">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header text-center">

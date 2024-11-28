@@ -48,6 +48,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg bg-primary fixed-top">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link fw-semibold text-white mx-5" aria-current="page" href="../index.php">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-semibold text-white mx-5" aria-current="page" href="servicepage.php">Services</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <div class="container-fluid d-flex justify-content-center align-items-center vh-100">
         <div class="container">
             <div class="row justify-content-center">

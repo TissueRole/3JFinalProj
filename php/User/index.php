@@ -62,21 +62,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="../servicepage.php">Services</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="../logout.php">Logout</a>
-                    </li>
-                </ul>
-            </div>
+    <nav class="navbar navbar-expand-lg bg-primary fixed-top">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link fw-semibold text-white mx-5" aria-current="page" href="../../index.php">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-semibold text-white " aria-current="page" href="../servicepage.php">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-semibold text-white mx-5" aria-current="page" href="../logout.php">Logout</a>
+                </li>
+            </ul>
         </div>
-    </nav> 
+    </nav>
 
     <div class="container my-5 p-5" id="Services">
         <h1 class="fs-3 mb-2">Upcoming Appointments:</h1>

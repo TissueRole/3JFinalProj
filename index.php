@@ -1,3 +1,8 @@
+<?php
+  session_start(); 
+
+  $isLoggedIn = isset($_SESSION['user_id']); 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,13 +13,17 @@
     <link rel="stylesheet" href="css/homepage.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-primary">
+      <nav class="navbar navbar-expand-lg bg-primary">
         <div class="container-fluid px-5">
           <a class="navbar-brand ms-5" href="#">Tirapi</a>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-              <li class="nav-item ">
-                <a class="nav-link me-5 fw-semibold text-white" aria-current="page" href="#">Home</a>
+              <li class="nav-item">
+                <?php if ($isLoggedIn): ?>
+                    <a class="nav-link fw-semibold text-white btn me-5" href="php/User/index.php">Account</a>
+                <?php else: ?>
+                    <a class="nav-link fw-semibold text-white btn me-5" href="#">Home</a>
+                <?php endif; ?>
               </li>
               <li class="nav-item">
                 <a class="nav-link me-5 fw-semibold text-white" href="php/servicepage.php">Services</a>
@@ -23,7 +32,11 @@
                 <a class="nav-link fw-semibold text-white" href="#testimonials">Testimonials</a>
               </li>
               <li class="nav-item me-5">
-                <a class="nav-link fw-semibold text-white btn" href="php/login.php">Log In</a>
+                <?php if ($isLoggedIn): ?>
+                  <a class="nav-link fw-semibold text-white btn" href="php/logout.php">Log Out</a>
+                <?php else: ?>
+                  <a class="nav-link fw-semibold text-white btn" href="php/login.php">Log In</a>
+                <?php endif; ?>
               </li>
             </ul>
           </div>
