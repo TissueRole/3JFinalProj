@@ -1,56 +1,56 @@
 <?php
 
-include '../connection.php';
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
+    include '../connection.php';
+    session_start();
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: login.php");
+        exit();
+    }
 
-$sql = "SELECT * FROM users WHERE user_id = {$_SESSION['user_id']}";
-$result = $conn->query($sql);
+    $sql = "SELECT * FROM users WHERE user_id = {$_SESSION['user_id']}";
+    $result = $conn->query($sql);
 
-if ($result->num_rows > 0) {
-    $user = $result->fetch_assoc();
-} else {
-    echo "User details not found.";
-    exit();
-}
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+    } else {
+        echo "User details not found.";
+        exit();
+    }
 
-$sql1 = "
-    SELECT 
-        appointments.appointment_id, 
-        services.service_name, 
-        users.full_name AS therapist_name, 
-        appointments.appointment_date, 
-        appointments.start_time, 
-        appointments.end_time, 
-        appointments.status
-    FROM appointments
-    JOIN services ON appointments.service_id = services.service_id
-    JOIN users ON appointments.therapist_id = users.user_id AND users.role = 'therapist'
-    WHERE appointments.user_id = {$_SESSION['user_id']}
-    AND appointments.status IN ('pending', 'approved');
-";
-$result1 = $conn->query($sql1);
+    $sql1 = "
+        SELECT 
+            appointments.appointment_id, 
+            services.service_name, 
+            users.full_name AS therapist_name, 
+            appointments.appointment_date, 
+            appointments.start_time, 
+            appointments.end_time, 
+            appointments.status
+        FROM appointments
+        JOIN services ON appointments.service_id = services.service_id
+        JOIN users ON appointments.therapist_id = users.user_id AND users.role = 'therapist'
+        WHERE appointments.user_id = {$_SESSION['user_id']}
+        AND appointments.status IN ('pending', 'approved');
+    ";
+    $result1 = $conn->query($sql1);
 
-$sql2 = "
-    SELECT 
-        appointments.appointment_id, 
-        services.service_name, 
-        users.full_name AS therapist_name, 
-        appointments.appointment_date, 
-        appointments.start_time, 
-        appointments.end_time, 
-        appointments.status
-    FROM appointments
-    JOIN services ON appointments.service_id = services.service_id
-    JOIN users ON appointments.therapist_id = users.user_id AND users.role = 'therapist'
-    WHERE appointments.user_id = {$_SESSION['user_id']} 
-    AND appointments.appointment_date < CURDATE()
-    AND appointments.status = 'completed';
-";
-$result2 = $conn->query($sql2);
+    $sql2 = "
+        SELECT 
+            appointments.appointment_id, 
+            services.service_name, 
+            users.full_name AS therapist_name, 
+            appointments.appointment_date, 
+            appointments.start_time, 
+            appointments.end_time, 
+            appointments.status
+        FROM appointments
+        JOIN services ON appointments.service_id = services.service_id
+        JOIN users ON appointments.therapist_id = users.user_id AND users.role = 'therapist'
+        WHERE appointments.user_id = {$_SESSION['user_id']} 
+        AND appointments.appointment_date < CURDATE()
+        AND appointments.status = 'completed';
+    ";
+    $result2 = $conn->query($sql2);
 
 ?>
 <!DOCTYPE html>
@@ -64,7 +64,7 @@ $result2 = $conn->query($sql2);
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="#">Therapy Booking</a>
+            <a class="navbar-brand" href="../servicepage.php">Services</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -105,8 +105,8 @@ $result2 = $conn->query($sql2);
                                     <td>{$row['start_time']}</td>
                                     <td>{$row['end_time']}</td>
                                     <td>{$row['status']}</td>
-                                    <td><a href='manageServices/edit.php?id={$row['appointment_id']}' class='btn btn-sm btn-warning'>Reschedule</a></td>
-                                    <td><a href='manageServices/delete.php?id={$row['appointment_id']}' class='btn btn-sm btn-danger'>Cancel</a></td>
+                                    <td><a href='appointmentsAction/edit.php?id={$row['appointment_id']}' class='btn btn-sm btn-warning'>Reschedule</a></td>
+                                    <td><a href='appointmentsAction/delete.php?id={$row['appointment_id']}' class='btn btn-sm btn-danger'>Cancel</a></td>
                                 </tr>";
                         }
                     } else {
