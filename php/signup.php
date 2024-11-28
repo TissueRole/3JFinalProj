@@ -20,7 +20,7 @@
                 session_start();
                 $_SESSION['user_id'] = $conn->insert_id;
                 $_SESSION['name'] = $name;
-                header("Location: ../user.html");
+                header("Location: User/index.php");
                 exit();
             } else {
                 echo "<h3 class='text-center mt-5'>Error: Could not complete registration. " . $conn->error . "</h3>";
@@ -115,7 +115,7 @@
                                 <button type="submit" class="btn btn-primary">Sign Up</button>
                             </div>
                         </form>
-                        <a href="php/login.php">Already have an account?</a>
+                        <a href="login.php">Already have an account?</a>
                     </div>
                 </div>
             </div>
