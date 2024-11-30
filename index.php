@@ -15,7 +15,7 @@
 <body>
       <nav class="navbar navbar-expand-lg bg-primary">
         <div class="container-fluid px-5">
-          <a class="navbar-brand ms-5" href="#">Tirapi</a>
+          <a class="navbar-brand ms-5 text-white fs-4" href="#">Tirapi</a>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
@@ -48,8 +48,8 @@
             <p class="text-white fs-3 mb-5 ms-5 text-shadow">Where Your Well-Being Comes First. Let’s Take the First Step Together!"</p>
             <h3 class="text-white mb-5 ms-5 fs-1 fst-italic text-shadow">Your Path to Healing Starts Here <br>Book Your Therapy Session Today.</h3>
             <div class="pt-5">
-                <button class="btn btn-primary mx-5 fs-4 fw-semibold">Book Now</button>
-                <button class="btn btn-primary me-5 fs-4 fw-semibold">View Services</button>
+                <a class="btn btn-primary mx-5 fs-4 fw-semibold" href="php/booking.php">Book Now</a>
+                <a class="btn btn-primary me-5 fs-4 fw-semibold" href="php/servicepage.php">View Services</a>
             </div>
         </div>
       </section>
@@ -79,7 +79,7 @@
                             <h5 class="card-title">Individual Therapy</h5>
                             <p class="card-text text-indent">One-on-one sessions with a licensed therapist to address personal challenges such as anxiety, stress, or life transitions.</p>
                             <p class="card-text"><b>Price:</b> $50–$120 per session.</p>
-                            <a href="booking.html" class="btn btn-primary ms-5">Book Now</a>
+                            <a href="php/booking.php" class="btn btn-primary ms-5">Book Now</a>
                           </div>
                         </div>
                       </div>
@@ -92,7 +92,7 @@
                             <h5 class="card-title">Family Therapy</h5>
                             <p class="card-text text-indent">A group session involving family members to work on improving relationships and addressing family dynamics.</p>
                             <p class="card-text"><b>Price:</b> $100–$180 per session.</p>
-                            <a href="#" class="btn btn-primary">Book Now</a>
+                            <a href="php/booking.php" class="btn btn-primary">Book Now</a>
                           </div>
                         </div>
                       </div>
@@ -105,7 +105,7 @@
                             <h5 class="card-title">Couples Therapy</h5>
                             <p class="card-text text-indent">Focused sessions for couples to improve communication, resolve conflicts, and strengthen their relationship.</p>
                             <p class="card-text"><b>Price:</b> $80–$150 per session.</p>
-                            <a href="#" class="btn btn-primary">Book Now</a>
+                            <a href="php/booking.php" class="btn btn-primary">Book Now</a>
                           </div>
                         </div>
                       </div>
@@ -203,7 +203,7 @@
             <div class="col">
               <div>
                 <p class="fs-4 mb-5">Create an Account and Schedule Your First Sessions</p>  
-                <a href="signup.html" class="btn btn-primary fs-5" target="_blank">Create Account</a>
+                <a href="php/booking.php" class="btn btn-primary fs-5" target="_blank">Create Account</a>
               </div>
             </div>
           </div>
@@ -211,7 +211,6 @@
       </section>
       <footer class="bg-primary d-flex align-items-center">
         <p class="ms-5 pt-3">Copyright 2024</p>
-        <a href="user.html">asdasdasd</a>
       </footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
