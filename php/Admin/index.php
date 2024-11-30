@@ -19,6 +19,9 @@
     }
     $sql4 = "SELECT * FROM appointments";
     $result4 = $conn->query($sql4);
+
+    $sql5 = "SELECT * FROM payments";
+    $result5 = $conn->query($sql5);
 }
 
 ?>
@@ -43,7 +46,7 @@
             <a class="nav-link text-white" aria-current="page" href="#therapistSched">Therapist Schedule Management</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-white" aria-current="page" href="#">Payment and Reports</a>
+            <a class="nav-link text-white" aria-current="page" href="#Payments">Payments</a>
         </li>
         <li class="nav-item d-flex justify-content-end ms-auto me-5">
             <a href="../logout.php" class="btn text-white">Log Out</a>
@@ -140,7 +143,54 @@
                     ?>
                 </tbody>
             </table>
-            <a class="btn btn-primary" href="manageServices/add.php">Add New</a>
+        </div>
+    </div>
+    <div class="container my-5 p-5" id="Payments">
+        <h1 class="fs-3 mb-2">Payments</h1>
+        <div>
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <th scope="col">Id</th>
+                    <th scope="col">Appointment Id</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Method</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Transaction ID</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Actions</th>
+                </thead>
+                <tbody>
+                    <?php
+                        if ($result5->num_rows > 0) {
+                            while ($row = $result5->fetch_assoc()) {
+                                echo "<tr>
+                                        <td>{$row['payment_id']}</td>
+                                        <td>{$row['appointment_id']}</td>
+                                        <td>{$row['amount']}</td>
+                                        <td>{$row['payment_method']}</td>
+                                        <td>{$row['transaction_id']}</td>
+                                        <td>{$row['payment_date']}</td>
+                                        <td>{$row['payment_status']}</td>
+                                        <td>
+                                            <div class='btn-group'>
+                                                <button type='button' class='btn btn-sm btn-warning dropdown-toggle' data-bs-toggle='dropdown' aria-expanded='false'>
+                                                    Change Status
+                                                </button>
+                                                <ul class='dropdown-menu'>
+                                                    <li><a class='dropdown-item' href='managePayments/changeStatus.php?id={$row['payment_id']}&payment_status=paid'>Paid</a></li>
+                                                    <li><a class='dropdown-item' href='managePayments/changeStatus.php?id={$row['payment_id']}&payment_status=unpaid'>Unpaid</a></li>
+                                                    <li><a class='dropdown-item' href='managePayments/changeStatus.php?id={$row['payment_id']}&payment_status=refunded'>Refunded</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='9' class='text-center'>No services found.</td></tr>";
+                        }
+                    ?>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="container my-5 p-5" id="therapistSched">
