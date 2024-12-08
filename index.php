@@ -22,7 +22,7 @@
                 <?php if ($isLoggedIn): ?>
                     <a class="nav-link fw-semibold text-white btn me-5" href="php/User/index.php">Account</a>
                 <?php else: ?>
-                    <a class="nav-link fw-semibold text-white btn me-5" href="#">Home</a>
+                    <a class="nav-link fw-semibold text-white btn me-5"  href="#">Home</a>
                 <?php endif; ?>
               </li>
               <li class="nav-item">
@@ -125,7 +125,7 @@
         </div>
       </section>
       <section class="testimonials" id="testimonials">
-        <h1 class="text-center text-white pt-5 mb-5">Testimonials</h1>
+        <h1 class="text-center text-white pt-5 mb-5">TESTIMONIALS</h1>
         <div class="d-flex justify-content-center">
           <div id="carouselExample" class="carousel slide w-75 test-color shadow">
             <div class="carousel-inner">
@@ -209,9 +209,11 @@
           </div>
         </div>
       </section>
+      <div class= kolor>
       <footer class="bg-primary d-flex align-items-center">
         <p class="ms-5 pt-3">Copyright 2024</p>
       </footer>
+                </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

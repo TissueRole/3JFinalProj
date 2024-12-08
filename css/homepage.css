@@ -1,3 +1,4 @@
+
 .hero-img{
     background-image: url('../images/hero.jpg');
     background-size: cover;
@@ -6,6 +7,7 @@
 }
 .navbar{
     box-shadow: 0 2px 8px rgba(0, 0, 0, .5);
+    
 }
 .text-shadow {
     text-shadow: -2px 2px 4px rgba(0, 0, 0, 0.4); 
@@ -14,14 +16,14 @@
     text-indent: 2rem;
 }
 .linear-background{
-    background-image: linear-gradient(to bottom right,#0d6dfd28, #0d6dfdd3);;
+    background-image: linear-gradient(to bottom right,#0d6dfd28, #517dcf);;
 }
 
 .card-body{
     background-color: rgb(219, 219, 219);
 }
 .testimonials{
-    background: linear-gradient(to bottom, #007bff 50%, #f1f1f1 50%);
+    background: linear-gradient(to bottom, #0d47a1 50%, #f1f1f1 50%);
     height: 600px;
     margin: 0;
 }
@@ -34,10 +36,14 @@
     border-radius: 50%;
 }
 .test-color{
-    background-color: #3b86f7;
+    background-color: #b6ccfe;
     color: white;
 }
 .create-account{
     background-image: linear-gradient(to top left,#0d6dfd28, #0d6dfdd3);
     color: white;
+}
+
+.kolor{
+    color: #b6ccfe;
 }
